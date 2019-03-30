@@ -36,5 +36,10 @@ namespace Vidly2.Controllers
 
             return Content(string.Format("pageIndex ={0}&sortBy={1}", pageIndex, sortBy));
         }
+
+        public ActionResult ByReliseDate(int? year, int month)
+        {
+            return Content(year +"/"+month);
+        }
     }
 }
