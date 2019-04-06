@@ -6,11 +6,17 @@ using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using Vidly2.Models;
 using Vidly2.ViewModels;
+using System.Data.Entity;
 
 namespace Vidly2.Controllers
 {
     public class MoviesController : Controller
     {
+        private ApplicationDbContext _context;
+        public MoviesController()
+        {
+            _context = new ApplicationDbContext();
+        }
         // GET: Movies/Random
         public ActionResult Random()
         {
@@ -27,7 +33,7 @@ namespace Vidly2.Controllers
                 Movie = movie,
                 Customers = customers
             };
-            
+
             //ViewData["Movie"] = movie;//można ale bez sensu
             //ViewBag.Movie = movie;//??
 
@@ -43,15 +49,20 @@ namespace Vidly2.Controllers
             return Content("id=" + id);
         }
 
-        public ActionResult Index(int? pageIndex, string sortBy)
+        [Route("Movies")]
+        public ActionResult Index()
         {
-            if (!pageIndex.HasValue)
-                pageIndex = 1;
+            var movies = _context.Movies.Include(m => m.Genre);
 
-            if (String.IsNullOrWhiteSpace(sortBy))
-                sortBy = "Name";
+            return View(movies.ToList());
+        }
 
-            return Content(string.Format("pageIndex ={0}&sortBy={1}", pageIndex, sortBy));
+        [Route("Movies/Details/{Id}")]
+        public ActionResult Details(int Id)
+        {
+            var movie = _context.Movies.Include(m => m.Genre).SingleOrDefault(c => c.Id == Id);
+
+            return View(movie);
         }
 
         [Route("movies/released/{year:regex([0-9]{4}):range(1900,2100)}/{month:regex([0-9]{2}):range(1,12)}")]
