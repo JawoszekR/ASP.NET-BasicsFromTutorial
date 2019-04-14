@@ -243,6 +243,10 @@
     <Compile Include="Migrations\201904061415252_PopulateGenreTable.Designer.cs">
       <DependentUpon>201904061415252_PopulateGenreTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904141643151_AddAtributesToMovie.cs" />
+    <Compile Include="Migrations\201904141643151_AddAtributesToMovie.Designer.cs">
+      <DependentUpon>201904141643151_AddAtributesToMovie.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -373,6 +377,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904061415252_PopulateGenreTable.resx">
       <DependentUpon>201904061415252_PopulateGenreTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904141643151_AddAtributesToMovie.resx">
+      <DependentUpon>201904141643151_AddAtributesToMovie.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
