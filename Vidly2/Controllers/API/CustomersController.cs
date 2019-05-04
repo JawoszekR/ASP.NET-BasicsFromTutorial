@@ -19,30 +19,30 @@ namespace Vidly2.Controllers.API
             _context = new ApplicationDbContext();
         }
         // GET /api/customers
-        public IEnumerable<CustomerDTO> GetCustomers()
+        public IEnumerable<CustomerDto> GetCustomers()
         {
-            return _context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDTO>);
+            return _context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDto>);
         }
 
         // GET /api/customer/1
         public IHttpActionResult GetCustomer(int id)
         {
-            var customer = _context.Customers.Single(c => c.Id == id);
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
 
             if (customer == null)
                 return NotFound();
 
-            return Ok(Mapper.Map<Customer, CustomerDTO>(customer));
+            return Ok(Mapper.Map<Customer, CustomerDto>(customer));
         }
 
         // POST /api/customers
         [HttpPost]
-        public IHttpActionResult CreateCustomer(CustomerDTO customerDto) // convention -> PostCustomer
+        public IHttpActionResult CreateCustomer(CustomerDto customerDto) // convention -> PostCustomer
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var customer = Mapper.Map<CustomerDTO, Customer>(customerDto);
+            var customer = Mapper.Map<CustomerDto, Customer>(customerDto);
 
             _context.Customers.Add(customer);
             _context.SaveChanges();
@@ -54,7 +54,7 @@ namespace Vidly2.Controllers.API
 
         // PUT /api/customers/1
         [HttpPut]
-        public void UpdateCustomers(int id, CustomerDTO customerDto)
+        public void UpdateCustomers(int id, CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -64,7 +64,7 @@ namespace Vidly2.Controllers.API
             if (customerInDB == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            Mapper.Map<CustomerDTO, Customer>(customerDto, customerInDB);
+            Mapper.Map<CustomerDto, Customer>(customerDto, customerInDB);
 
             customerInDB.Name = customerDto.Name;
             customerInDB.Birthdate = customerDto.Birthdate;

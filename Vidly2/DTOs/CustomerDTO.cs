@@ -7,7 +7,7 @@ using Vidly2.Models;
 
 namespace Vidly2.DTOs
 {
-    public class CustomerDTO
+    public class CustomerDto
     {
         public int Id { get; set; }
 
