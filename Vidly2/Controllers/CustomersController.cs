@@ -27,15 +27,18 @@ namespace Vidly2.Controllers
         [Route("Customers")]
         public ActionResult Index()
         {
-            var customers = _context.Customers.Include(c => c.MembershipType);
+            //var customers = _context.Customers.Include(c => c.MembershipType);
 
-            return View(customers);
+            //return View(customers);
+            return View();
         }
 
         [Route("Customers/Details/{Id}")]
         public ActionResult Details(int Id)
         {
-            var customer = _context.Customers.Include(m => m.MembershipType).SingleOrDefault(c => c.Id == Id);
+            var customer = _context.Customers
+                .Include(m => m.MembershipType)
+                .SingleOrDefault(c => c.Id == Id);
 
             return View(customer);
         }
