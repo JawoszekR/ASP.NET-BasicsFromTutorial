@@ -22,7 +22,10 @@ namespace Vidly2.Controllers
             //var movies = _context.Movies.Include(m => m.Genre);
 
             //return View(movies.ToList());
-            return View();
+            if (User.IsInRole(RoleName.CanManageMovies))
+                return View("List");
+            else
+                return View("ReadOnlyList");
         }
 
         [Route("Movies/Details/{Id}")]
@@ -78,6 +81,7 @@ namespace Vidly2.Controllers
             return View("MovieForm", viewModel);
         }
 
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult New()
         {
             var genres = _context.Genres.ToList();
